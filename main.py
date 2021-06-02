@@ -70,10 +70,18 @@ def signal_filteration(signals, c, sigma2v, filter_order):
 
 def plot(sig1, sig2, label1: str, label2: str, title: str):
     n = np.array(range(len(sig1)))
-    plt.figure(title)
+    # plt.figure(title)
     plt.xlim(0, len(n))
+    plt.subplot(4, 1, 2)
+    plt.plot(n, sig1, label=label1)
+    plt.legend()
+    plt.subplot(4, 1, 3)
+    plt.plot(n, sig2, label=label2)
+    plt.legend()
+    plt.subplot(4, 1, 4)
     plt.plot(n, sig1, 'g', label=label1)
     plt.plot(n, sig2, 'b', label=label2)
+    # plt.savefig('output/original_filtered')
 
     plt.legend()
 
@@ -94,9 +102,13 @@ def main():
     x = np.loadtxt('data/Original_ECG.txt')
     x -= np.mean(x)
 
-    filtered_signal = signal_filteration(y, c, varV, filter_order)
+    n = np.array(range(len(x)))
+    plt.subplot(4, 1, 1)
+    plt.plot(n, x, label='Original')
+    plt.legend()
+    # plt.savefig('output/original')
 
-    n = np.array(range(len(y)))
+    filtered_signal = signal_filteration(y, c, varV, filter_order)
 
     plot(filtered_signal, -y, 'Filtered Signal',
          'Distorted Signal', 'Filtered and Distorted Signal')
